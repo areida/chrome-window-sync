@@ -1,0 +1,22 @@
+{
+    "name"             : "chrome-mirror",
+    "manifest_version" : 2,
+    "version"          : "0.0.0",
+    "description"      : "Set up master and slave tabs",
+    "icons"            : {
+        "128" : "images/icon-128x128.png"
+    },
+    "permissions" : [
+        "http://*/",
+        "https://*/",
+        "tabs"
+    ],
+    "background":{
+        "persistent" : false,
+        "page"       : "background.html"
+    },
+    "browser_action" : {
+        "default_icon"  : "images/icon-128x128.png",
+        "default_title" : "Chrome Mirror"
+    }
+}
