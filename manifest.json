@@ -1,8 +1,8 @@
 {
-    "name"             : "chrome-mirror",
+    "name"             : "chrome-window-sync",
     "manifest_version" : 2,
     "version"          : "0.0.0",
-    "description"      : "Set up master and slave tabs",
+    "description"      : "Sync all open chrome tabs",
     "icons"            : {
         "19"  : "images/icon-128x128.png",
         "128" : "images/icon-128x128.png"
@@ -19,6 +19,6 @@
     },
     "browser_action" : {
         "default_icon"  : "images/icon-128x128.png",
-        "default_title" : "Chrome Mirror"
+        "default_title" : "Window Sync"
     }
 }

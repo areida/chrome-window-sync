@@ -1,7 +1,7 @@
 var ACTIVE_IMAGE_PATH   = 'images/icon-128x128-inverse.png';
 var INACTIVE_IMAGE_PATH = 'images/icon-128x128.png';
 
-function syncTabs(tab) {
+function updateHistoryFromTab(tab) {
     chrome.tabs.query({active : true}, function(tabs) {
         var changeUrl, reload;
 
@@ -17,7 +17,16 @@ function syncTabs(tab) {
     });
 }
 
-// Trigger other tabs to sync when the master tab updates
+function updateUrlFromTab(tab) {
+    chrome.tabs.query({active : true}, function(tabs) {
+        for (var i in tabs) {
+            if (tabs[i].id !== tab.id) {
+                chrome.tabs.update(tabs[i].id, {url : tab.url});
+            }
+        }
+    });
+}
+
 function tabUpdateListener(tabId, changeInfo, tab) {
     chrome.storage.local.get('tab', function(values) {
         if (
@@ -26,7 +35,7 @@ function tabUpdateListener(tabId, changeInfo, tab) {
             changeInfo.status &&
             changeInfo.status === 'complete'
         ) {
-            syncTabs(tab);
+            updateHistoryFromTab(tab);
         }
     });
 }
@@ -39,7 +48,7 @@ chrome.storage.local.get({
 
     // If the script is activated
     if (values.tab && values.toggle) {
-        syncTabs(values.tab);
+        updateUrlFromTab(values.tab);
         chrome.tabs.onUpdated.addListener(tabUpdateListener)
         chrome.browserAction.setIcon({path : ACTIVE_IMAGE_PATH});
     }
@@ -48,6 +57,7 @@ chrome.storage.local.get({
         chrome.storage.local.get({
             toggle : values.toggle
         }, function(values) {
+
             // If the script is active, deactivate it
             if (values.toggle) {
                 chrome.tabs.onUpdated.removeListener(tabUpdateListener);
@@ -57,7 +67,7 @@ chrome.storage.local.get({
                     toggle : false
                 });
             } else {
-                syncTabs(tab);
+                updateUrlFromTab(tab);
                 chrome.tabs.onUpdated.addListener(tabUpdateListener);
                 chrome.browserAction.setIcon({path : ACTIVE_IMAGE_PATH});
                 chrome.storage.local.set({
