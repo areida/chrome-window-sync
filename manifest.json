@@ -1,7 +1,7 @@
 {
     "name"             : "chrome-window-sync",
     "manifest_version" : 2,
-    "version"          : "0.0.0",
+    "version"          : "1.0.0",
     "description"      : "Sync all open chrome tabs",
     "icons"            : {
         "19"  : "images/icon-128x128.png",
