@@ -59,6 +59,7 @@ function browserActionListener(masterTab, toggle) {
         if (values.toggle) {
             chrome.browserAction.setIcon({path : INACTIVE_IMAGE_PATH});
             chrome.browserAction.setTitle({title : 'Sync windows'});
+            chrome.tabs.reload(masterTab.id);
             chrome.runtime.onMessage.removeListener();
             chrome.tabs.onUpdated.removeListener();
             chrome.storage.local.set({
@@ -98,7 +99,7 @@ function startListeners(masterTab) {
 
     chrome.browserAction.setIcon({path : ACTIVE_IMAGE_PATH});
     chrome.browserAction.setTitle({title : 'Unsync windows'});
-
+    chrome.tabs.executeScript(masterTab.id, {file: 'js/content.js'});
     chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         if (sender.tab.id === masterTab.id) {
             contentScriptListener(masterTab, request, sendResponse);
