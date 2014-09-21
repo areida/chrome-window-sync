@@ -44,6 +44,4 @@ Events.prototype.stop = function() {
     chrome.tabs.onUpdated.removeListener();
 };
 
-exports.TYPE_CLICK = TYPE_CLICK;
-
 module.exports = Events;

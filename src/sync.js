@@ -22,22 +22,7 @@ Sync.prototype.onEachActiveTab = function(callback) {
 };
 
 Sync.prototype.click = function(request) {
-    var code;
-
-    if (request.targetId) {
-        code = Scripts.clickById(request.targetId);
-    } else if (request.targetClass) {
-        code = Scripts.clickByClass(
-            request.tagName,
-            request.targetClass.replace(' ', '.*')
-        );
-    } else {
-        code = Scripts.clickByTagName(request.tagName);
-    }
-
-    this.onEachActiveTab(function(tab) {
-        chrome.tabs.executeScript(tab.id, {code : code});
-    });
+    this.triggerEvent('click', request);
 };
 
 Sync.prototype.history = function(url) {
@@ -67,6 +52,26 @@ Sync.prototype.stop = function() {
 
     // Reload this tab to clear content scripts
     chrome.tabs.reload(this.tab.id);
+};
+
+Sync.prototype.triggerEvent = function(type, request) {
+    var code;
+
+    if (request.targetId) {
+        code = Scripts.triggerOnId(type, request.targetId);
+    } else if (request.targetClass) {
+        code = Scripts.triggerOnClass(
+            type,
+            request.tagName,
+            request.targetClass.replace(' ', '.*')
+        );
+    } else {
+        code = Scripts.triggerOnTagName(type, request.tagName);
+    }
+
+    this.onEachActiveTab(function(tab) {
+        chrome.tabs.executeScript(tab.id, {code : code});
+    });
 };
 
 module.exports = Sync;

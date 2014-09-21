@@ -1,24 +1,24 @@
 'use_strict';
 
-exports.clickByClass = function(tagName, tagClass) {
+exports.triggerOnClass = function(type, tagName, tagClass) {
     return (
         'var elements = document.getElementsByTagName(\'' + tagName + '\');' +
         'for(var i in elements) {' +
             'var className = elements[i].className;' +
             'if (className && className.match(/' + tagClass + '/)) {' +
-                'elements[i].click();' +
+                'elements[i].' + type + '();' +
                 'break;' +
             '}' +
         '}'
     );
 };
 
-exports.clickById = function(id) {
-    return ('document.getElementById(\'' + id + '\').click();');
+exports.triggerOnId = function(type, id) {
+    return ('document.getElementById(\'' + id + '\').' + type + '();');
 };
 
-exports.clickByTagName = function(tagName) {
-    return ('document.getElementsByTagName(\'' + tagName + '\')[0].click();');
+exports.triggerOnTagName = function(type, tagName) {
+    return ('document.getElementsByTagName(\'' + tagName + '\')[0].' + type + '();');
 };
 
 exports.pushState = function(url) {
