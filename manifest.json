@@ -12,13 +12,10 @@
         "storage",
         "tabs"
     ],
-    "background":{
+    "content_security_policy" : "script-src 'self'; object-src 'self'",
+    "background" : {
         "persistent" : false,
-        "scripts"    : [
-            "js/config.js",
-            "js/extension.js",
-            "js/bootstrap.js"
-        ]
+        "scripts"    : ["js/background.js"]
     },
     "browser_action" : {
         "default_icon"  : "images/icon-128x128.png",
